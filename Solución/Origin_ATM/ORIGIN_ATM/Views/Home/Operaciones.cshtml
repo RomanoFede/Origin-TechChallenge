@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Operaciones";
+}
+
+<h2>Operaciones</h2>
+
+<div class="jumbotron" id="Extracionesdiv">
+    <p class="lead">Extracciones</p>
+    @using (Html.BeginForm("Extraccion", "Home", FormMethod.Post))
+    {
+        <form action="/Extraccion" method="post">
+            <button type="submit">Extracción</button>
+        </form>
+
+    }
+    <p class="lead">Balance</p>
+    @using (Html.BeginForm("Balance", "Home", FormMethod.Post))
+    {
+        <form action="/Balance" method="post">
+            <button type="submit">Consultar Balance</button>
+        </form>
+
+    }
+
+</div>
+
+<div class="jumbotron" id="Salirdiv">
+    @using (Html.BeginForm("Salir", "Home", FormMethod.Post))
+    {
+        <form action="/Salir" method="post">
+            <button type="submit">Salir</button>
+        </form>
+    }
+</div>

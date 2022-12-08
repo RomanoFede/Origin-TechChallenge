@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ATM_DbModelStoreContainer" CdmEntityContainer="ATM_DbEntities">
+    <EntitySetMapping Name="Cuenta_Usuario">
+      <EntityTypeMapping TypeName="ATM_DbModel.Cuenta_Usuario">
+        <MappingFragment StoreEntitySet="Cuenta_Usuario">
+          <ScalarProperty Name="ID_Cuenta" ColumnName="ID_Cuenta" />
+          <ScalarProperty Name="Numero_Cuenta" ColumnName="Numero_Cuenta" />
+          <ScalarProperty Name="Estado_Cuenta" ColumnName="Estado_Cuenta" />
+          <ScalarProperty Name="PIN_Cuenta" ColumnName="PIN_Cuenta" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="ID_UltimaOperacion" ColumnName="ID_UltimaOperacion" />
+          <ScalarProperty Name="Fecha_Vencimiento" ColumnName="Fecha_Vencimiento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Operacion">
+      <EntityTypeMapping TypeName="ATM_DbModel.Operacion">
+        <MappingFragment StoreEntitySet="Operacion">
+          <ScalarProperty Name="ID_Operacion" ColumnName="ID_Operacion" />
+          <ScalarProperty Name="ID_Cuenta" ColumnName="ID_Cuenta" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

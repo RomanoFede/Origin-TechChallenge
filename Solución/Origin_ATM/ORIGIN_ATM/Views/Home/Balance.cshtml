@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Balance";
+}
+
+<h2>Balance</h2>
+@{
+    var x = Session["NumeroTarjeta"];
+    var Nombre = Session["Nombre"];
+    var Apellido = Session["Apellido"];
+    var Vencimiento = Session["Vencimiento"];
+    var Balance = Session["Balance"];
+
+}
+
+<div>
+    <p id="NumeroTarjetaP">@x.ToString()</p>
+    <p>@Nombre.ToString()</p>
+    <p>@Apellido.ToString()</p>
+    <p>@Vencimiento.ToString()</p>
+
+
+    <div>
+        <p>Su balance es de </p>
+        <p style="color: red; font-size: 20px; ">@Balance.ToString()</p>
+
+    </div>
+
+
+
+
+</div>
+<div class="jumbotron" id="Salirdiv">
+    @using (Html.BeginForm("Salir", "Home", FormMethod.Post))
+    {
+        <form action="/Salir" method="post">
+            <button type="submit">Salir</button>
+        </form>
+    }
+    @using (Html.BeginForm("Operaciones", "Home", FormMethod.Post))
+    {
+        <form action="/Operaciones" method="post">
+            <button type="submit">Atras</button>
+        </form>
+    }
+</div>

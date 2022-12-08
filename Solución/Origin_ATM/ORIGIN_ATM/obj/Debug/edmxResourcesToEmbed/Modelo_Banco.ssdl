@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATM_DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cuenta_Usuario">
+    <Key>
+      <PropertyRef Name="ID_Cuenta" />
+    </Key>
+    <Property Name="ID_Cuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Numero_Cuenta" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado_Cuenta" Type="int" Nullable="false" />
+    <Property Name="PIN_Cuenta" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Balance" Type="money" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID_UltimaOperacion" Type="int" />
+    <Property Name="Fecha_Vencimiento" Type="date" />
+  </EntityType>
+  <EntityType Name="Operacion">
+    <Key>
+      <PropertyRef Name="ID_Operacion" />
+    </Key>
+    <Property Name="ID_Operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Cuenta" Type="int" Nullable="false" />
+    <Property Name="Codigo_Operacion" Type="varchar" MaxLength="50" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Monto" Type="money" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Cuenta_Usuario_Operacion">
+    <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+    <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operacion">
+        <PropertyRef Name="ID_Operacion" />
+      </Principal>
+      <Dependent Role="Cuenta_Usuario">
+        <PropertyRef Name="ID_UltimaOperacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operacion_Cuenta_Usuario">
+    <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="1" />
+    <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuenta_Usuario">
+        <PropertyRef Name="ID_Cuenta" />
+      </Principal>
+      <Dependent Role="Operacion">
+        <PropertyRef Name="ID_Cuenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ATM_DbModelStoreContainer">
+    <EntitySet Name="Cuenta_Usuario" EntityType="Self.Cuenta_Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Cuenta_Usuario_Operacion" Association="Self.FK_Cuenta_Usuario_Operacion">
+      <End Role="Operacion" EntitySet="Operacion" />
+      <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operacion_Cuenta_Usuario" Association="Self.FK_Operacion_Cuenta_Usuario">
+      <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+      <End Role="Operacion" EntitySet="Operacion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron" id="logindiv">
+    <h1>ATM</h1>
+    <p class="lead">Ingrese su número de tarjeta</p>
+    @using (Html.BeginForm("Autorizar", "Home", FormMethod.Post))
+    {
+<form action="/Autorizar" method="post">
+    <input type="number" maxlength="16" placeholder="Ingresar Numero de Tarjeta" name="Numero" id="TxTNumeroTarjeta" required />
+    <button type="submit">Aceptar</button>
+    <input type="reset" value="Limpiar">
+</form>
+
+    }
+
+</div>
+
+
+<div class="row">
+
+</div>

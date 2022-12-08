@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Error2";
+}
+
+
+<h2>Error de Extracción</h2>
+<div>
+    <p>El monto ingresado supera el valor permitido.</p>
+    <p></p>
+
+
+</div>
+<div></div>
+<div></div>
+<div>
+</div>
+<div>
+    @using (Html.BeginForm("Operaciones", "Home", FormMethod.Post))
+    {
+        <form action="/Operaciones" method="post">
+            <button type="submit">Atras</button>
+        </form>
+    }
+</div>

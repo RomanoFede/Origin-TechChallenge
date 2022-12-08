@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ATM_DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cuenta_Usuario">
+          <Key>
+            <PropertyRef Name="ID_Cuenta" />
+          </Key>
+          <Property Name="ID_Cuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Numero_Cuenta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado_Cuenta" Type="int" Nullable="false" />
+          <Property Name="PIN_Cuenta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="money" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_UltimaOperacion" Type="int" />
+          <Property Name="Fecha_Vencimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="ID_Operacion" />
+          </Key>
+          <Property Name="ID_Operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Cuenta" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Monto" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cuenta_Usuario_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="ID_Operacion" />
+            </Principal>
+            <Dependent Role="Cuenta_Usuario">
+              <PropertyRef Name="ID_UltimaOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Cuenta_Usuario1">
+          <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta_Usuario">
+              <PropertyRef Name="ID_Cuenta" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="ID_Cuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ATM_DbModelStoreContainer">
+          <EntitySet Name="Cuenta_Usuario" EntityType="Self.Cuenta_Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cuenta_Usuario_Operacion" Association="Self.FK_Cuenta_Usuario_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Cuenta_Usuario1" Association="Self.FK_Operacion_Cuenta_Usuario1">
+            <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ATM_DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cuenta_Usuario">
+          <Key>
+            <PropertyRef Name="ID_Cuenta" />
+          </Key>
+          <Property Name="ID_Cuenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero_Cuenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado_Cuenta" Type="Int32" Nullable="false" />
+          <Property Name="PIN_Cuenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_UltimaOperacion" Type="Int32" />
+          <Property Name="Fecha_Vencimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Operacion" Relationship="Self.FK_Cuenta_Usuario_Operacion" FromRole="Cuenta_Usuario" ToRole="Operacion" />
+          <NavigationProperty Name="Operacion1" Relationship="Self.FK_Operacion_Cuenta_Usuario1" FromRole="Cuenta_Usuario" ToRole="Operacion" />
+        </EntityType>
+        <EntityType Name="Operacion">
+          <Key>
+            <PropertyRef Name="ID_Operacion" />
+          </Key>
+          <Property Name="ID_Operacion" Type="Int32" Nullable="false" />
+          <Property Name="ID_Cuenta" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Cuenta_Usuario" Relationship="Self.FK_Cuenta_Usuario_Operacion" FromRole="Operacion" ToRole="Cuenta_Usuario" />
+          <NavigationProperty Name="Cuenta_Usuario1" Relationship="Self.FK_Operacion_Cuenta_Usuario1" FromRole="Operacion" ToRole="Cuenta_Usuario" />
+        </EntityType>
+        <Association Name="FK_Cuenta_Usuario_Operacion">
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+          <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operacion">
+              <PropertyRef Name="ID_Operacion" />
+            </Principal>
+            <Dependent Role="Cuenta_Usuario">
+              <PropertyRef Name="ID_UltimaOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operacion_Cuenta_Usuario1">
+          <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="1" />
+          <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta_Usuario">
+              <PropertyRef Name="ID_Cuenta" />
+            </Principal>
+            <Dependent Role="Operacion">
+              <PropertyRef Name="ID_Cuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ATM_DbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cuenta_Usuario" EntityType="Self.Cuenta_Usuario" />
+          <EntitySet Name="Operacion" EntityType="Self.Operacion" />
+          <AssociationSet Name="FK_Cuenta_Usuario_Operacion" Association="Self.FK_Cuenta_Usuario_Operacion">
+            <End Role="Operacion" EntitySet="Operacion" />
+            <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operacion_Cuenta_Usuario1" Association="Self.FK_Operacion_Cuenta_Usuario1">
+            <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+            <End Role="Operacion" EntitySet="Operacion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ATM_DbModelStoreContainer" CdmEntityContainer="ATM_DbEntities1">
+          <EntitySetMapping Name="Cuenta_Usuario">
+            <EntityTypeMapping TypeName="ATM_DbModel.Cuenta_Usuario">
+              <MappingFragment StoreEntitySet="Cuenta_Usuario">
+                <ScalarProperty Name="ID_Cuenta" ColumnName="ID_Cuenta" />
+                <ScalarProperty Name="Numero_Cuenta" ColumnName="Numero_Cuenta" />
+                <ScalarProperty Name="Estado_Cuenta" ColumnName="Estado_Cuenta" />
+                <ScalarProperty Name="PIN_Cuenta" ColumnName="PIN_Cuenta" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="ID_UltimaOperacion" ColumnName="ID_UltimaOperacion" />
+                <ScalarProperty Name="Fecha_Vencimiento" ColumnName="Fecha_Vencimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operacion">
+            <EntityTypeMapping TypeName="ATM_DbModel.Operacion">
+              <MappingFragment StoreEntitySet="Operacion">
+                <ScalarProperty Name="ID_Operacion" ColumnName="ID_Operacion" />
+                <ScalarProperty Name="ID_Cuenta" ColumnName="ID_Cuenta" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

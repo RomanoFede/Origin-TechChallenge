@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "VerificarPIN";
+}
+
+<h2>Verificación de  PIN</h2>
+<div class="jumbotron" id="logindiv">
+    <h1>ATM</h1>
+    <p class="lead">Ingrese su número de PIN</p>
+    @using (Html.BeginForm("ComprobarPIN", "Home", FormMethod.Post))
+    {
+<form action="/ComprobarPIN" method="post">
+    <input type="number" maxlength="4" placeholder="Ingresar el PIN" name="PIN" id="TxTNumeroPIN" required />
+    <div></div>
+    <button type="submit">Aceptar</button>
+    <input type="reset" value="Limpiar">
+</form>
+    }
+
+
+</div>
+@{ 
+    if (Session["InvalidPINCounter"] != null)
+    {
+        var x = Session["InvalidPINCounter"];
+        <div > <p style="color: red; font-size: 20px; ">Cuidado  has ingresado incorrectamente el PIN @x.ToString()  veces </p></div>; 
+        <div><p style="color: red; font-size: 20px; "> Si ingresas el PIN más de 4 veces de forma incorrecta tu cuenta será bloqueada.</p></div>
+            
+    }
+}
+<div class="jumbotron" id="Salirdiv">
+    @using (Html.BeginForm("Salir", "Home", FormMethod.Post))
+    {
+    <form action="/Salir" method="post">
+        <button type="submit">Salir</button>
+    </form>
+    }
+</div>

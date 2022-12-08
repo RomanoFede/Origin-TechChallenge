@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATM_DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cuenta_Usuario">
+    <Key>
+      <PropertyRef Name="ID_Cuenta" />
+    </Key>
+    <Property Name="ID_Cuenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Numero_Cuenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado_Cuenta" Type="Int32" Nullable="false" />
+    <Property Name="PIN_Cuenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Balance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_UltimaOperacion" Type="Int32" />
+    <Property Name="Fecha_Vencimiento" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Operacion" Relationship="Self.FK_Cuenta_Usuario_Operacion" FromRole="Cuenta_Usuario" ToRole="Operacion" />
+    <NavigationProperty Name="Operacion1" Relationship="Self.FK_Operacion_Cuenta_Usuario" FromRole="Cuenta_Usuario" ToRole="Operacion" />
+  </EntityType>
+  <EntityType Name="Operacion">
+    <Key>
+      <PropertyRef Name="ID_Operacion" />
+    </Key>
+    <Property Name="ID_Operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Cuenta" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Cuenta_Usuario" Relationship="Self.FK_Cuenta_Usuario_Operacion" FromRole="Operacion" ToRole="Cuenta_Usuario" />
+    <NavigationProperty Name="Cuenta_Usuario1" Relationship="Self.FK_Operacion_Cuenta_Usuario" FromRole="Operacion" ToRole="Cuenta_Usuario" />
+  </EntityType>
+  <Association Name="FK_Cuenta_Usuario_Operacion">
+    <End Role="Operacion" Type="Self.Operacion" Multiplicity="0..1" />
+    <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operacion">
+        <PropertyRef Name="ID_Operacion" />
+      </Principal>
+      <Dependent Role="Cuenta_Usuario">
+        <PropertyRef Name="ID_UltimaOperacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operacion_Cuenta_Usuario">
+    <End Role="Cuenta_Usuario" Type="Self.Cuenta_Usuario" Multiplicity="1" />
+    <End Role="Operacion" Type="Self.Operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuenta_Usuario">
+        <PropertyRef Name="ID_Cuenta" />
+      </Principal>
+      <Dependent Role="Operacion">
+        <PropertyRef Name="ID_Cuenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ATM_DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cuenta_Usuario" EntityType="Self.Cuenta_Usuario" />
+    <EntitySet Name="Operacion" EntityType="Self.Operacion" />
+    <AssociationSet Name="FK_Cuenta_Usuario_Operacion" Association="Self.FK_Cuenta_Usuario_Operacion">
+      <End Role="Operacion" EntitySet="Operacion" />
+      <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operacion_Cuenta_Usuario" Association="Self.FK_Operacion_Cuenta_Usuario">
+      <End Role="Cuenta_Usuario" EntitySet="Cuenta_Usuario" />
+      <End Role="Operacion" EntitySet="Operacion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
